@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Model Viewer Example</title>
+  <style>
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Set the background color to match the model viewer */
+    body {
+      background-color: #a2b9bc;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    
+    .intro {
+      max-width: 800px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    
+    #my-model-viewer {
+      width: 400px;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    
+    .additional-content {
+      max-width: 1000px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .content-column {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      flex: 1 1 45%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .content-column img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    .content-column h3 {
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .content-column p {
+      color: #555;
+    }
+
+    
+    @media (max-width: 800px) {
+      .content-column {
+        flex: 1 1 100%;
+      }
+    }
+
+    @media (max-width: 650px) {
+      #my-model-viewer {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="intro">
+    <h1>A Sample Portfolio Page With GUI</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. 
+      Cras venenatis euismod malesuada. Nulla facilisi. Donec fringilla, justo at ullamcorper cursus, 
+      neque urna pulvinar augue, eget facilisis enim purus in neque.
+    </p>
+  </div>
+
+  <!-- Model Viewer -->
+  <div id="my-model-viewer"></div>
+  <script src="https://unpkg.com/simple-model-viewer@1.0.0/dist/browser/model-viewer.browser.umd.js"></script>
+
+  <script>
+    const viewer = new ModelViewer({
+      containerId: "my-model-viewer",
+      modelsDirectory: "/models/",
+      models: ["sheep.glb", 'chalice.glb'],
+      showGui: true,
+      backgroundColor: 0xa2b9bc,
+    });
+  </script>
+
+  
+  <div class="additional-content">
+    <div class="content-column">
+      <img src="res/sheep.png" alt="Sheep Example Image">
+      <h3>Sheep</h3>
+      <p>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta 
+        sunt explicabo.
+      </p>
+    </div>
+    <div class="content-column">
+      <img src="res/chalice.png" alt="Example Image 2">
+      <h3>Chalice</h3>
+      <p>
+        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. 
+        Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

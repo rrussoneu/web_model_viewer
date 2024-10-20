@@ -272,7 +272,7 @@ const viewer = new ModelViewer({
 
 ### Examples
 
-Two example set ups are provided in the `examples` directory. You can see a live example [here](https://example-modeler-ab455159928b.herokuapp.com/)
+Two example set ups are provided in the `examples` directory. You can see live examples for a portfolio [here](https://example-modeler-portfolio-88f6a66485a4.herokuapp.com/) and for a landing page [here](https://example-modeler-ab455159928b.herokuapp.com/)
 
 ### License
 
