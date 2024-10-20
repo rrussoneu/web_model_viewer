@@ -97,8 +97,6 @@ my-3d-project/
 ├── models/
 │   ├── model1.glb
 │   └── model2.glb
-├── src/
-│   └── main.js
 ├── index.html
 ├── package.json
 └── vite.config.js (if using Vite)
@@ -277,7 +275,7 @@ const viewer = new ModelViewer({
 
 🎨 **Examples**
 
-Two example set ups are provided in the `examples` directory.
+Two example set ups are provided in the `examples` directory. You can see a live example [here](https://example-modeler-ab455159928b.herokuapp.com/)
 
 
 📄 **License**
