@@ -7,13 +7,14 @@ export default class ModelViewer {
   constructor(options = {}) {
     // Default options
     this.options = {
-      containerId: options.containerId || 'my-model-viewer',
-      modelsDirectory: options.modelsDirectory || '/models/',
-      models: options.models || [],
-      backgroundColor: options.backgroundColor || 0xffffff, // White default background
-      enableControls: options.enableControls !== false, // Controls enabled by default (clicking and rotating)
-      lighting: options.lighting || {}, // Any custom lighting goes here
-      onModelLoad: options.onModelLoad || null, // Callback for on load
+      showGui: typeof options.showGui !== 'undefined' ? options.showGui : true,
+      containerId: typeof options.containerId !== 'undefined' ? options.containerId : 'my-model-viewer',
+      modelsDirectory: typeof options.modelsDirectory !== 'undefined' ? options.modelsDirectory : '/models/',
+      models: Array.isArray(options.models) ? options.models : [],
+      backgroundColor: typeof options.backgroundColor !== 'undefined' ? options.backgroundColor : 0xffffff,
+      enableControls: options.enableControls !== false,
+      lighting: typeof options.lighting !== 'undefined' ? options.lighting : {},
+      onModelLoad: typeof options.onModelLoad !== 'undefined' ? options.onModelLoad : null,
     };
 
     this.container = document.getElementById(this.options.containerId);
@@ -21,6 +22,8 @@ export default class ModelViewer {
     this.modelsDirectory = this.options.modelsDirectory;
     this.models = this.options.models;
     this.clock = new THREE.Clock();
+    this.showGui = this.options.showGui;
+    console.log(this.showGui);
 
     this.init();
   }
@@ -55,7 +58,10 @@ export default class ModelViewer {
     }
 
     // GUI
-    this.initGUI();
+    console.log(this.showGui);
+    if (this.showGui) {
+      this.initGUI();
+    }
 
     // Handle window resize
     window.addEventListener('resize', () => this.onWindowResize(), false);
