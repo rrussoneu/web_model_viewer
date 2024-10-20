@@ -17,9 +17,7 @@ A **simple** and **lightweight** 3D model viewer for quickly embedding interacti
    - [With CDN](#with-cdn)
 5. [Configuration Options](#configuration-options)
 6. [Examples](#examples)
-7. [Troubleshooting](#troubleshooting)
-8. [Contributing](#contributing)
-9. [License](#license)
+7. [License](#license)
 
 ---
 
