@@ -15,9 +15,8 @@ A **simple** and **lightweight** 3D model viewer for quickly embedding interacti
 4. [Quick Start](#quick-start)
    - [With npm and a Bundler](#with-npm-and-a-bundler)
    - [With CDN](#with-cdn)
-5. [Configuration Options](#configuration-options)
-6. [Examples](#examples)
-7. [License](#license)
+5. [Examples](#Examples)
+6. [License](#license)
 
 ---
 
@@ -80,7 +79,7 @@ Add the following `<script>` tags to your HTML file:
 <script src="https://unpkg.com/simple-model-viewer@1.0.1/dist/browser/model-viewer.browser.umd.js"></script>
 ```
 
-*Note:* Ensure that these scripts are included in the order shown to handle dependencies correctly.
+_Note:_ Ensure that these scripts are included in the order shown to handle dependencies correctly.
 
 🔧 **Quick Start**
 
@@ -106,29 +105,29 @@ my-3d-project/
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Model Viewer Example</title>
-  <style>
-    #my-model-viewer {
-      width: 600px;
-      height: 600px;
-    }
-  </style>
-</head>
-<body>
-  <div id="my-model-viewer"></div>
-  
-  <script type="module">
-    import ModelViewer from 'simple-model-viewer';
+  <head>
+    <meta charset="UTF-8" />
+    <title>Model Viewer Example</title>
+    <style>
+      #my-model-viewer {
+        width: 600px;
+        height: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="my-model-viewer"></div>
 
-    const viewer = new ModelViewer({
-      containerId: 'my-model-viewer',
-      modelsDirectory: '/models/',
-      models: ['sheep.glb','chalice.glb', 'ore.glb'],
-    });
-  </script>
-</body>
+    <script type="module">
+      import ModelViewer from "simple-model-viewer";
+
+      const viewer = new ModelViewer({
+        containerId: "my-model-viewer",
+        modelsDirectory: "/models/",
+        models: ["sheep.glb", "chalice.glb", "ore.glb"],
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -138,14 +137,14 @@ If you're using Vite, create a `vite.config.js`:
 
 ```javascript
 // vite.config.js
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
   server: {
     open: true,
   },
   build: {
-    outDir: 'dist',
+    outDir: "dist",
   },
 });
 ```
@@ -175,42 +174,42 @@ Navigate to `http://localhost:3000` (or the port your bundler specifies) to see 
 <!-- cdn-example.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Simple Model Viewer CDN Example</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-    #my-model-viewer {
-      width: 100vw;
-      height: 100vh;
-    }
-  </style>
-</head>
-<body>
-  <div id="my-model-viewer"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simple Model Viewer CDN Example</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      #my-model-viewer {
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="my-model-viewer"></div>
 
-  <!-- Include Three.js via CDN -->
-  <script src="https://unpkg.com/three@0.153.0/build/three.min.js"></script>
+    <!-- Include Three.js via CDN -->
+    <script src="https://unpkg.com/three@0.153.0/build/three.min.js"></script>
 
-  <!-- Include lil-gui via CDN -->
-  <script src="https://unpkg.com/lil-gui@0.17.0/dist/lil-gui.min.js"></script>
+    <!-- Include lil-gui via CDN -->
+    <script src="https://unpkg.com/lil-gui@0.17.0/dist/lil-gui.min.js"></script>
 
-  <!-- Include simple-model-viewer UMD build via CDN -->
-  <script src="https://unpkg.com/simple-model-viewer@1.0.1/dist/browser/model-viewer.browser.umd.js"></script>
+    <!-- Include simple-model-viewer UMD build via CDN -->
+    <script src="https://unpkg.com/simple-model-viewer@1.0.1/dist/browser/model-viewer.browser.umd.js"></script>
 
-  <script>
-    // Initialize the ModelViewer
-    const viewer = new ModelViewer({
-      containerId: "my-model-viewer",
-      modelsDirectory: "/models/",
-      models: ["model1.glb", "model2.glb"],
-      showGui: true,
-    });
-  </script>
-</body>
+    <script>
+      // Initialize the ModelViewer
+      const viewer = new ModelViewer({
+        containerId: "my-model-viewer",
+        modelsDirectory: "/models/",
+        models: ["model1.glb", "model2.glb"],
+        showGui: true,
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -256,9 +255,9 @@ When initializing the `ModelViewer`, you can customize its behavior using variou
 
 ```javascript
 const viewer = new ModelViewer({
-  containerId: 'my-model-viewer',
-  modelsDirectory: './models/',
-  models: ['model1.glb', 'model2.glb'],
+  containerId: "my-model-viewer",
+  modelsDirectory: "./models/",
+  models: ["model1.glb", "model2.glb"],
   showGui: true,
   backgroundColor: 0x000000, // Black background
   enableControls: true,
@@ -266,16 +265,15 @@ const viewer = new ModelViewer({
     ambientIntensity: 0.7,
   },
   onModelLoad: (gltf) => {
-    console.log('Model loaded:', gltf);
+    console.log("Model loaded:", gltf);
   },
 });
 ```
 
-🎨 **Examples**
+### Examples
 
 Two example set ups are provided in the `examples` directory. You can see a live example [here](https://example-modeler-ab455159928b.herokuapp.com/)
 
-
-📄 **License**
+### License
 
 This project is licensed under the MIT License.
