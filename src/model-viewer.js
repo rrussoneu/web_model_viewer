@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
+import { GUI } from 'lil-gui';
 
 export default class ModelViewer {
   constructor(options = {}) {
@@ -28,7 +28,7 @@ export default class ModelViewer {
     this.init();
   }
 
-  init() {
+  async init() {
     // Scene
     this.scene = new THREE.Scene();
     if (this.options.backgroundColor !== undefined) {

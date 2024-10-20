@@ -1,0 +1,47 @@
+{
+  "name": "simple-model-viewer",
+  "version": "1.0.0",
+  "description": "A simple 3D model viewer for embedding into websites",
+  "main": "dist/module/model-viewer.cjs.js",
+  "module": "dist/module/model-viewer.es.js",
+  "browser": "dist/browser/model-viewer.browser.umd.js",
+  "types": "dist/types/model-viewer.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run build:module && npm run build:browser",
+    "build:module": "vite build --config vite.module.config.js",
+    "build:browser": "vite build --config vite.browser.config.js",
+    "prepublishOnly": "npm run build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "threejs",
+    "model",
+    "viewer",
+    "3d",
+    "webgl",
+    "three",
+    "gltf",
+    "glb",
+    "simple",
+    "model-viewer"
+  ],
+  "author": "Raphael Russo <raphaelrusso090@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rrussoneu/web_model_viewer"
+  },
+  "dependencies": {
+    "lil-gui": "^0.19.2",
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.9"
+  }
+}

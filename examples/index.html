@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Model Viewer Example</title>
+  <style>
+    #my-model-viewer {
+      width: 600px;
+      height: 600px;
+    }
+  </style>
+</head>
+<body>
+  <div id="my-model-viewer"></div>
+  
+  <script type="module">
+    import ModelViewer from '../dist/model-viewer.es.js';
+
+    const viewer = new ModelViewer({
+      containerId: 'my-model-viewer',
+      modelsDirectory: '/models/',
+      models: ['sheep.glb','chalice.glb'],
+    });
+  </script>
+</body>
+</html>
