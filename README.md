@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![npm version](https://img.shields.io/npm/v/simple-model-viewer.svg)
 
-A **simple** and **lightweight** 3D model viewer for quickly embedding interactive models into your websites. An easy method for showcasing portfolios, adding some flair to landing pages, or displaying product models without the hassle of extensive coding.
+A **simple** and **lightweight** 3D model viewer for quickly embedding interactive models into your websites. An easy method for showcasing portfolios, adding some flair to landing pages, or displaying product models without the hassle of extensive coding. [Example](https://example-modeler-portfolio-88f6a66485a4.herokuapp.com/)
 
 ## 📚 Table of Contents
 
