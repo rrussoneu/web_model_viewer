@@ -15,15 +15,24 @@ export default class ModelViewer {
       enableControls: options.enableControls !== false,
       lighting: typeof options.lighting !== 'undefined' ? options.lighting : {},
       onModelLoad: typeof options.onModelLoad !== 'undefined' ? options.onModelLoad : null,
+      width: typeof options.width !== 'undefined' ? options.width : null, // New option
+      height: typeof options.height !== 'undefined' ? options.height : null, // New option
     };
 
+    // Get the container element
     this.container = document.getElementById(this.options.containerId);
+    if (!this.container) {
+      throw new Error(`Container with ID '${this.options.containerId}' not found.`);
+    }
     this.container.style.position = 'relative'; // Need positioning context
+
+    // Initialize properties
     this.modelsDirectory = this.options.modelsDirectory;
     this.models = this.options.models;
     this.clock = new THREE.Clock();
     this.showGui = this.options.showGui;
-    console.log(this.showGui);
+    this.width = this.options.width || this.container.clientWidth;
+    this.height = this.options.height || this.container.clientHeight;
 
     this.init();
   }
@@ -38,14 +47,15 @@ export default class ModelViewer {
     // Camera
     this.camera = new THREE.PerspectiveCamera(
       45,
-      this.container.clientWidth / this.container.clientHeight,
+      this.width / this.height,
       0.1,
       1000
     );
+    this.camera.position.set(0, 0, 5); // Initial position
 
     // Renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+    this.renderer.setSize(this.width, this.height);
     this.renderer.physicallyCorrectLights = true;
     this.container.appendChild(this.renderer.domElement);
 
@@ -58,7 +68,6 @@ export default class ModelViewer {
     }
 
     // GUI
-    console.log(this.showGui);
     if (this.showGui) {
       this.initGUI();
     }
@@ -76,7 +85,6 @@ export default class ModelViewer {
   }
 
   addLights() {
-
     // Ambient light
     const ambientIntensity = this.options.lighting.ambientIntensity || 0.5;
     const ambientLight = new THREE.AmbientLight(0xffffff, ambientIntensity);
@@ -123,19 +131,20 @@ export default class ModelViewer {
     this.gui = new GUI({ autoPlace: false }); // Prevents automatic placement
     this.container.appendChild(this.gui.domElement); // Append GUI to container
 
-    // Put the GUI in the top right corner
+    // Position the GUI
     this.gui.domElement.style.position = 'absolute';
     this.gui.domElement.style.top = '0px';
     this.gui.domElement.style.right = '0px';
-    this.gui.domElement.style.zIndex = '1'; // Make sure GUI is on top
+    this.gui.domElement.style.zIndex = '1'; // Ensure GUI is on top
 
-    // Add controls to GUI
+    // Add model selection control
     const modelController = this.gui.add(this.params, 'selectedModel', this.models);
-    modelController.onChange((value) => {
+    modelController.name('Select Model').onChange((value) => {
       this.loadModel(value);
     });
 
-    this.gui.add(this.params, 'wireframe').onChange((value) => {
+    // Add wireframe toggle
+    this.gui.add(this.params, 'wireframe').name('Wireframe').onChange((value) => {
       this.toggleWireframe(value);
     });
   }
@@ -189,7 +198,7 @@ export default class ModelViewer {
           });
         }
 
-        // Add wireframe setting
+        // Apply wireframe setting
         this.toggleWireframe(this.params.wireframe);
 
         // Callback after model load
@@ -211,9 +220,11 @@ export default class ModelViewer {
           if (Array.isArray(child.material)) {
             child.material.forEach((material) => {
               material.wireframe = value;
+              material.needsUpdate = true;
             });
           } else {
             child.material.wireframe = value;
+            child.material.needsUpdate = true;
           }
         }
       });
@@ -235,8 +246,35 @@ export default class ModelViewer {
   }
 
   onWindowResize() {
-    this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
+    // If width and height are set no adjustment
+    if (this.options.width && this.options.height) {
+      return;
+    }
+
+    // Else adjust to container's size
+    this.width = this.container.clientWidth;
+    this.height = this.container.clientHeight;
+
+    this.camera.aspect = this.width / this.height;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+
+    this.renderer.setSize(this.width, this.height);
+  }
+
+  setSize(newWidth, newHeight) {
+    // Update internal width and height
+    this.width = newWidth;
+    this.height = newHeight;
+
+    // Update renderer size
+    this.renderer.setSize(this.width, this.height);
+
+    // Update camera aspect ratio and projection matrix
+    this.camera.aspect = this.width / this.height;
+    this.camera.updateProjectionMatrix();
+
+    // Optionally, adjust the container's size
+    this.container.style.width = `${this.width}px`;
+    this.container.style.height = `${this.height}px`;
   }
 }
