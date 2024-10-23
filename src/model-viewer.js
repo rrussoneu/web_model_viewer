@@ -183,6 +183,23 @@ export default class ModelViewer {
       .onChange((value) => {
         this.pointLight.intensity = value;
       });
+    this.collapseGUI();
+  }
+
+  collapseGUI() {
+    // Delay the collapse to ensure GUI is fully rendered
+    setTimeout(() => {
+      // Find the toggle button within the GUI's title bar
+      const toggleButton = this.gui.domElement.querySelector(".title");
+
+      if (toggleButton) {
+        toggleButton.click(); // Programmatically click the toggle button to collapse the GUI
+      } else {
+        console.warn(
+          "Toggle button not found. GUI might not collapse as expected."
+        );
+      }
+    }, 100); // 100ms delay; adjust if necessary
   }
 
   loadModel(filename) {

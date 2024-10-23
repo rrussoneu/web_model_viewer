@@ -43,3 +43,6 @@ coverage/
 # Temporary Files
 tmp/
 temp/
+
+# Testing html
+index.html
