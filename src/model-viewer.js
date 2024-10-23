@@ -1,30 +1,42 @@
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GUI } from 'lil-gui';
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GUI } from "lil-gui";
 
 export default class ModelViewer {
   constructor(options = {}) {
     // Default options
     this.options = {
-      showGui: typeof options.showGui !== 'undefined' ? options.showGui : true,
-      containerId: typeof options.containerId !== 'undefined' ? options.containerId : 'my-model-viewer',
-      modelsDirectory: typeof options.modelsDirectory !== 'undefined' ? options.modelsDirectory : '/models/',
+      showGui: typeof options.showGui !== "undefined" ? options.showGui : true,
+      containerId:
+        typeof options.containerId !== "undefined"
+          ? options.containerId
+          : "my-model-viewer",
+      modelsDirectory:
+        typeof options.modelsDirectory !== "undefined"
+          ? options.modelsDirectory
+          : "/models/",
       models: Array.isArray(options.models) ? options.models : [],
-      backgroundColor: typeof options.backgroundColor !== 'undefined' ? options.backgroundColor : 0xffffff,
+      backgroundColor:
+        typeof options.backgroundColor !== "undefined"
+          ? options.backgroundColor
+          : 0xffffff,
       enableControls: options.enableControls !== false,
-      lighting: typeof options.lighting !== 'undefined' ? options.lighting : {},
-      onModelLoad: typeof options.onModelLoad !== 'undefined' ? options.onModelLoad : null,
-      width: typeof options.width !== 'undefined' ? options.width : null, // New option
-      height: typeof options.height !== 'undefined' ? options.height : null, // New option
+      lighting: typeof options.lighting !== "undefined" ? options.lighting : {},
+      onModelLoad:
+        typeof options.onModelLoad !== "undefined" ? options.onModelLoad : null,
+      width: typeof options.width !== "undefined" ? options.width : null, // New option
+      height: typeof options.height !== "undefined" ? options.height : null, // New option
     };
 
     // Get the container element
     this.container = document.getElementById(this.options.containerId);
     if (!this.container) {
-      throw new Error(`Container with ID '${this.options.containerId}' not found.`);
+      throw new Error(
+        `Container with ID '${this.options.containerId}' not found.`
+      );
     }
-    this.container.style.position = 'relative'; // Need positioning context
+    this.container.style.position = "relative"; // Need positioning context
 
     // Initialize properties
     this.modelsDirectory = this.options.modelsDirectory;
@@ -73,7 +85,7 @@ export default class ModelViewer {
     }
 
     // Handle window resize
-    window.addEventListener('resize', () => this.onWindowResize(), false);
+    window.addEventListener("resize", () => this.onWindowResize(), false);
 
     // Load the first model by default
     if (this.models.length > 0) {
@@ -87,8 +99,8 @@ export default class ModelViewer {
   addLights() {
     // Ambient light
     const ambientIntensity = this.options.lighting.ambientIntensity || 0.5;
-    const ambientLight = new THREE.AmbientLight(0xffffff, ambientIntensity);
-    this.scene.add(ambientLight);
+    this.ambientLight = new THREE.AmbientLight(0xffffff, ambientIntensity);
+    this.scene.add(this.ambientLight);
 
     // Point light
     this.pointLight = new THREE.PointLight(0xffffff, 2);
@@ -125,6 +137,8 @@ export default class ModelViewer {
     this.params = {
       selectedModel: this.models[0] || null,
       wireframe: false,
+      ambientIntensity: this.ambientLight.intensity,
+      pointLightIntensity: this.pointLight.intensity,
     };
 
     // Create GUI
@@ -132,21 +146,43 @@ export default class ModelViewer {
     this.container.appendChild(this.gui.domElement); // Append GUI to container
 
     // Position the GUI
-    this.gui.domElement.style.position = 'absolute';
-    this.gui.domElement.style.top = '0px';
-    this.gui.domElement.style.right = '0px';
-    this.gui.domElement.style.zIndex = '1'; // Ensure GUI is on top
+    this.gui.domElement.style.position = "absolute";
+    this.gui.domElement.style.top = "0px";
+    this.gui.domElement.style.right = "0px";
+    this.gui.domElement.style.zIndex = "1"; // Ensure GUI is on top
 
     // Add model selection control
-    const modelController = this.gui.add(this.params, 'selectedModel', this.models);
-    modelController.name('Select Model').onChange((value) => {
+    const modelController = this.gui.add(
+      this.params,
+      "selectedModel",
+      this.models
+    );
+    modelController.name("Select Model").onChange((value) => {
       this.loadModel(value);
     });
 
     // Add wireframe toggle
-    this.gui.add(this.params, 'wireframe').name('Wireframe').onChange((value) => {
-      this.toggleWireframe(value);
-    });
+    this.gui
+      .add(this.params, "wireframe")
+      .name("Wireframe")
+      .onChange((value) => {
+        this.toggleWireframe(value);
+      });
+
+    // Light intensity control
+    this.gui
+      .add(this.params, "ambientIntensity", 0, 2)
+      .name("Ambient Light Intensity")
+      .onChange((value) => {
+        this.ambientLight.intensity = value;
+      });
+
+    this.gui
+      .add(this.params, "pointLightIntensity", 0, 10)
+      .name("Point Light Intensity")
+      .onChange((value) => {
+        this.pointLight.intensity = value;
+      });
   }
 
   loadModel(filename) {
@@ -167,9 +203,9 @@ export default class ModelViewer {
         const size = box.getSize(new THREE.Vector3());
 
         // Reposition the model to center at origin
-        this.currentModel.position.x += (this.currentModel.position.x - center.x);
-        this.currentModel.position.y += (this.currentModel.position.y - center.y);
-        this.currentModel.position.z += (this.currentModel.position.z - center.z);
+        this.currentModel.position.x += this.currentModel.position.x - center.x;
+        this.currentModel.position.y += this.currentModel.position.y - center.y;
+        this.currentModel.position.z += this.currentModel.position.z - center.z;
 
         // Adjust the camera to fit the model
         const maxDim = Math.max(size.x, size.y, size.z);
@@ -202,13 +238,13 @@ export default class ModelViewer {
         this.toggleWireframe(this.params.wireframe);
 
         // Callback after model load
-        if (typeof this.options.onModelLoad === 'function') {
+        if (typeof this.options.onModelLoad === "function") {
           this.options.onModelLoad(gltf);
         }
       },
       undefined,
       (error) => {
-        console.error('An error happened while loading the model:', error);
+        console.error("An error happened while loading the model:", error);
       }
     );
   }
