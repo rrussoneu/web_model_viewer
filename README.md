@@ -1,3 +1,4 @@
+⚠️ This package is no longer maintained.
 # simple-model-viewer
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
